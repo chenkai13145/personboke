@@ -1,0 +1,148 @@
+<template>
+  <section class="metitle">
+    <h1>{{title}}</h1>
+    <div class="content">
+      <ul v-if="datas[0].type==='xinxi'" class="garid">
+        <li v-for="(item,index) in datas" :key="index">
+          <strong></strong>
+          <label v-if="item.label">{{item.title}}:</label>
+          <span v-html="item.text"></span>
+        </li>
+      </ul>
+      <ul class="garids" v-else-if="datas[0].type==='ji'">
+        <li class="btn">
+          <van-icon @click="truns" :class="activeclass?'btn_icon':''" name="apps-o" />
+        </li>
+        <li v-show="activeclass" v-for="(item,index) in datas" :key="index">
+          <span>{{index+1}}、{{item.text}}</span>
+        </li>
+        <!-- 图形化 -->
+        <li class="tul" v-show="!activeclass" v-for="(item) in tuData" :key="item.type">
+          <van-circle v-model="currentRate" :rate="item.value" :color="item.color" :text="item.type" />
+            <van-progress
+            v-if="!activeclass"
+            :percentage="item.value"
+            :pivot-color="item.color"
+            :color="'linear-gradient(to right, #be99ff,'+item.color+')'"
+          />
+        </li>
+      </ul>
+       <ul class="garids"  v-for="(item,index) in datas" :key="index+item.title" v-else>
+        <li class="btn">
+          <van-icon @click="truns" :class="activeclass?'btn_icon':''" name="apps-o" />
+        </li>
+        <li class="lin">
+            <div>{{item.title}}</div>
+            <div>描述：{{item.des}}</div>
+            <div>职责：
+                <div v-for="(items,index) in item.meto" :key="items+index">
+                     {{items}}
+                </div>
+            </div>
+            <div>{{item.content}}</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</template>
+<script>
+export default {
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    datas: {
+      type: Array,
+      required: true
+    },
+    tuData: {
+      type: Array
+    }
+  },
+  data() {
+    return {
+      activeclass: true,
+       gradientColor: {
+        '0%': '#3fecff',
+        '100%': 'red'
+      },
+      rate:20
+    };
+  },
+  methods: {
+    truns() {
+      this.activeclass = !this.activeclass;
+    }
+  }
+};
+</script>
+<style lang="scss">
+.metitle {
+  h1 {
+    font-weight: 600 !important;
+    padding-left: 30px;
+    border-left: 6px solid #000;
+    font-size: 24px;
+  }
+  .content {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .garid {
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .garid,
+  .garids {
+    background-color: rgb(233, 230, 230);
+    padding: 10px 0;
+    li:not(.btn){
+      min-width: 265px;
+      align-self: center;
+      font-size: 18px;
+      padding: 4px 6px;
+      display: flex;
+      display: -webkit-flex;
+      .van-progress {
+        width: 100%;
+      }
+      strong {
+        display: inline-block;
+        align-self: center;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #000;
+      }
+      strong {
+        display: inline-block;
+        margin: 0 4px 0 0;
+      }
+      span {
+        display: inline-block;
+        padding: 0 0 4px 0;
+      }
+    }
+    .btn {
+      text-align: center;
+      .btn_icon {
+        cursor: pointer;
+        font-size: 40px;
+      }
+    }
+    .tul{
+        display: flex;
+        .van-progress{
+            align-self: center;
+        }
+    }
+    .lin{
+        display: flex;
+        flex-direction: column;
+    }
+  }
+}
+</style>

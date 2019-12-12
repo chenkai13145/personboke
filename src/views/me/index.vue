@@ -10,12 +10,14 @@
       <meTitle title="项目经验" :datas="four" />
        <!-- 工作经历 -->
       <meTitle title="工作经历" :datas="four" />
+
     </div>
     
 </template>
 <script>
 import meTitle from '../../components/me/metitle'
 import Pre from '../../components/garid/index'
+
 export default {
     components:{
       meTitle,
@@ -174,6 +176,7 @@ export default {
         four:[
           {
             type:'exp',
+            off:true,
             title:'广汽商贸物流可视化平台',
             des:'为商家提供在线平台展示，用户使用平台在线查看物流数据。',
             meto:[
@@ -183,9 +186,11 @@ export default {
               '4、负责仓库实时监控、整车实时看板、仓储统计、入库明细、出库明细、仓库信息页面功能的实现',
               '5、负责与后端开发团队紧密配合，确保项目的交互功能完整实现。'
             ],
-            content:'利用vue.js、Echarts 、HTML5、CSS3、JS、elementui、axios、vuex、es6第三方百度地图开放平台技术进行组件化和模块化开发。'
+            content:'利用vue.js、Echarts 、HTML5、CSS3、JS、elementui、axios、vuex、es6第三方百度地图开放平台技术进行组件化和模块化开发。',
+            url:[require('@/assets/canku.png'),require('@/assets/me.png'),require('@/assets/home.png'),require('@/assets/sker.png')]
           },
           {
+            off:true,
             title:'联通计费管理平台',
             des:'为用户提供自有业务与第三方客户提供业务服务能力。',
             meto:[
@@ -194,9 +199,11 @@ export default {
               '3、依据项目需求，完成对复用组件的编写。' ,
               '4、与后端工程师配合，实现项目需求中页面交互功能开发。'
             ],
-            content:'利用react.js、redux、Echarts 、HTML5、CSS3、JS、antd、react-router-dom、less进行组件化和模块化开发'
+            content:'利用react.js、redux、Echarts 、HTML5、CSS3、JS、antd、react-router-dom、less进行组件化和模块化开发',
+            url:[require('@/assets/liantong/child.png'),require('@/assets/liantong/home.png'),require('@/assets/liantong/login.png')]
           },
            {
+            off:true,
             title:'电影预告',
             des:'为用户提供预览即将播出的电影预告片详情。',
             meto:[
@@ -205,9 +212,11 @@ export default {
               '3、	解决前端开发中遇到的技术难点，对页面性能进行优化，提高代码稳定性、提升用户体验。',
               '4、	与后端工程师配合，实现第三方qq、微信、微博登录'
             ],
-            content:'利用HTML5、CSS3、JS、uni-app技术进行组件化和模块化开发。'
+            content:'利用HTML5、CSS3、JS、uni-app技术进行组件化和模块化开发。',
+            url:[require('@/assets/movie/me.png'),require('@/assets/movie/seach.png'),require('@/assets/movie/info.png'),]
           },
            {
+            off:true,
             title:'课程系统',
             des:'为用户提供预览即将播出的电影预告片详情。',
             meto:[
@@ -215,11 +224,13 @@ export default {
              '2、负责后端接口编写业务逻辑的搭建。',
              '3、分析项目需求，完成对复用组件的编写。'
             ],
-            content:'利用node.js、HTML5、CSS3、JS、handlebars、express进行组件化和模块化开发'
+            content:'利用node.js、HTML5、CSS3、JS、handlebars、express进行组件化和模块化开发',
+            url:[require('@/assets/nodes/show.png'),require('@/assets/nodes/add.png'),require('@/assets/nodes/todo.png')]
           }
         ]
       }
-    }
+    },
+   
 }
 </script>
 <style lang="scss">

@@ -18,8 +18,13 @@
         </li>
         <!-- 图形化 -->
         <li class="tul" v-show="!activeclass" v-for="(item) in tuData" :key="item.type">
-          <van-circle v-model="currentRate" :rate="item.value" :color="item.color" :text="item.type" />
-            <van-progress
+          <van-circle
+            v-model="currentRate"
+            :rate="item.value"
+            :color="item.color"
+            :text="item.type"
+          />
+          <van-progress
             v-if="!activeclass"
             :percentage="item.value"
             :pivot-color="item.color"
@@ -27,25 +32,25 @@
           />
         </li>
       </ul>
-       <ul class="garids"  v-for="(item,index) in datas" :key="index+item.title" v-else>
+      <ul class="garids" v-for="(item,index) in datas" :key="index+item.title" v-else>
         <li class="btn">
-          <van-icon @click="truns" :class="activeclass?'btn_icon':''" name="apps-o" />
+          <van-icon @click="parents(index,item.url)" :class="item.off?'btn_icon':''" name="apps-o" />
         </li>
         <li class="lin">
-            <div>{{item.title}}</div>
-            <div>描述：{{item.des}}</div>
-            <div>职责：
-                <div v-for="(items,index) in item.meto" :key="items+index">
-                     {{items}}
-                </div>
-            </div>
-            <div>{{item.content}}</div>
+          <h3>{{item.title}}</h3>
+          <div>描述：{{item.des}}</div>
+          <div>
+            职责：
+            <div v-for="(items,index) in item.meto" :key="items+index">{{items}}</div>
+          </div>
+          <div>{{item.content}}</div>
         </li>
       </ul>
     </div>
   </section>
 </template>
 <script>
+import { ImagePreview } from "vant";
 export default {
   props: {
     title: {
@@ -63,16 +68,25 @@ export default {
   data() {
     return {
       activeclass: true,
-       gradientColor: {
-        '0%': '#3fecff',
-        '100%': 'red'
+      gradientColor: {
+        "0%": "#3fecff",
+        "100%": "red"
       },
-      rate:20
+      rate: 20,
+      currentRate: 85
     };
   },
   methods: {
     truns() {
       this.activeclass = !this.activeclass;
+    },
+    parents(index, data) {
+      ImagePreview({
+        images: data,
+        startPosition: 0,
+        showIndicators:true,
+        loop:true
+      });
     }
   }
 };
@@ -99,7 +113,8 @@ export default {
   .garids {
     background-color: rgb(233, 230, 230);
     padding: 10px 0;
-    li:not(.btn){
+    margin-bottom: 10px;
+    li:not(.btn) {
       min-width: 265px;
       align-self: center;
       font-size: 18px;
@@ -133,15 +148,15 @@ export default {
         font-size: 40px;
       }
     }
-    .tul{
-        display: flex;
-        .van-progress{
-            align-self: center;
-        }
+    .tul {
+      display: flex;
+      .van-progress {
+        align-self: center;
+      }
     }
-    .lin{
-        display: flex;
-        flex-direction: column;
+    .lin {
+      display: flex;
+      flex-direction: column;
     }
   }
 }

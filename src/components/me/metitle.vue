@@ -32,7 +32,12 @@
           />
         </li>
       </ul>
-      <ul class="garids" v-for="(item,index) in datas" :key="index+item.title" v-else>
+      <ul
+        class="garids"
+        v-for="(item,index) in datas"
+        :key="index+item.title"
+        v-else-if="datas[0].type==='exp'"
+      >
         <li class="btn">
           <van-icon @click="parents(index,item.url)" :class="item.off?'btn_icon':''" name="apps-o" />
         </li>
@@ -44,6 +49,18 @@
             <div v-for="(items,index) in item.meto" :key="items+index">{{items}}</div>
           </div>
           <div>{{item.content}}</div>
+        </li>
+      </ul>
+      <ul class="garids" v-else>
+        <li>
+          <van-steps direction="vertical" :active="0">
+            <van-step class="van-step--process" v-for="(item,index) in datas" :key="index">
+              <h3>{{item.gongsi}}</h3>
+              <p v-for="(itmes,index) in item.arr">
+                {{itmes}}
+              </p>
+            </van-step>
+          </van-steps>
         </li>
       </ul>
     </div>
@@ -84,8 +101,8 @@ export default {
       ImagePreview({
         images: data,
         startPosition: 0,
-        showIndicators:true,
-        loop:true
+        showIndicators: true,
+        loop: true
       });
     }
   }
@@ -157,6 +174,9 @@ export default {
     .lin {
       display: flex;
       flex-direction: column;
+    }
+    .van-steps--vertical{
+         width: 100%;
     }
   }
 }

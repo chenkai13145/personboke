@@ -37,6 +37,11 @@ const routes = [
     path:'/professional',
     name:'professional',
     component:()=>import('../views/Professional')
+  },
+  {
+      path:'/common',
+      name:'common',
+      component:()=>import('../views/common/common')
   }
 ]
 

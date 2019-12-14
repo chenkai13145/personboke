@@ -4,40 +4,43 @@
     <div class="postcom">
       <textarea rows="6" v-model="content"></textarea>
       <div class="top">
-        <span>请先登录</span>
-        <span @click="login" class="login">登录</span>
+        <span>{{$store.getters.users.name?'欢迎~~'+$store.getters.users.name:'请先登录'}}</span>
+        <span @click="layout" v-if="$store.getters.users.name" class="login">退出</span>
+        <span @click="login" v-else class="login">登录</span>
       </div>
+      <van-button plain type="primary" @click="postXin">发表评论</van-button>
       <!-- 展示评论 -->
       <div class="bottomshow">
         <div class="show" v-for="(item,index) in arrcom" :key="item.time+index">
-          <div class="numbers">{{item.lou}}楼</div>
+          <div class="numbers">{{item.paiming}}楼</div>
           <div class="com">
             <div>
               <div
                 class="icon"
-                :style="'background-color:'+ item.bgcolor+'; width: 50PX; height: 50PX;'"
-              ></div>
+                :style="'background-color:'+item.bgcolor+'; width: 50PX; height: 50PX;'"
+              >{{item.one}}</div>
             </div>
             <div class="hoshow">
               <div>
-                <p class="name">{{item.name}}&nbsp;&nbsp;{{item.time|filters}}</p>
+                <p class="name">{{item.name}}&nbsp;&nbsp;({{item.time|filters}})</p>
                 <p class="texts">{{item.text}}</p>
-                <p class="huifu" @click="copy(item._id,item.name)">回复</p>
+                <p class="huifu" @click="copy(item._id,item.name)">回复<strong v-if="$store.getters.users.id!==undefined&&$store.getters.users.id===item.userid" @click.stop="delposts(item._id)" class="del">删除</strong></p>
               </div>
               <div class="hoshow hoshows" v-for="(it,indexs) in item.comment" :key="it._id+indexs">
-                <p class="name">{{it.name}}&nbsp;&nbsp;{{it.time|filters}}</p>
+                <p class="name">{{it.name}}&nbsp;&nbsp;({{it.time|filters}})</p>
                 <p class="texts">{{it.text}}</p>
                 <p class="huifu" @click="copy(item._id,item.name)">回复</p>
               </div>
             </div>
           </div>
         </div>
+        <van-button plain type="primary" v-show='loadingPage' @click="pageLoading" class="jiazaibtn">加载更多</van-button>
       </div>
-      <van-icon @click="play" :class="[music?'musicadd':'dsad musicadd']" name="music-o" size="40" />
-      <audio ref="audio" hidden></audio>
+      <van-icon @click="play" :class="[music?'dsad musicadd':'musicadd']" name="music-o" size="40" />
+      <audio ref="audio" hidden loop></audio>
     </div>
     <!-- 弹窗 -->
-    <van-dialog v-model="show" title="登录" :width="winWidth>600?600:320" show-cancel-button>
+    <van-dialog v-model="show" :beforeClose="beforeClose" title="登录" :width="winWidth>600?600:320" show-cancel-button>
       <form>
         <van-cell-group>
           <van-field
@@ -55,7 +58,9 @@
   </div>
 </template>
 <script>
-import { getAll } from "@/api/commom.js";
+import { getAll,postFa,delpost } from "@/api/commom.js";
+import {logReg} from '@/api/user.js'
+import jwt_decode from 'jwt-decode'
 export default {
   data() {
     return {
@@ -66,10 +71,20 @@ export default {
       name:'',
       password:'',
       email:'',
-      content:''
+      content:'',
+      postId:'',
+      Query:{
+        size:10,
+        page:0
+      },
+      loadingPage:true
     };
   },
   mounted() {
+    console.log(this.$store.getters.users.id)
+    this.$nextTick(()=>{
+       this.play()
+    })
     // 获取窗口宽度
     if (window.innerWidth) {
       this.winWidth = window.innerWidth;
@@ -79,9 +94,11 @@ export default {
     this.getAllCom();
   },
   methods: {
+    //登录弹窗
     login() {
       this.show=true
     },
+    //音乐播放
     play() {
       this.music = !this.music;
       if (this.$refs.audio.src && this.$refs.audio.autoplay) {
@@ -92,20 +109,108 @@ export default {
         this.$refs.audio.autoplay = "autoplay";
       }
     },
+    //获取评论
     getAllCom() {
-      getAll().then(res => {
+      getAll(this.Query).then(res => {
         if (res.status === 200) {
-          res.data.data.forEach((element, index) => {
-            res.data.data[index].lou = index + 1;
+          res.data.da.forEach((element, index) => {
+            res.data.da[index].bgcolor='#'+Math.random().toString(16).substring(2,8)
+            res.data.da[index].one=element.name.substring(0,1)
           });
-          this.arrcom = res.data.data.reverse();
-          console.log(this.arrcom);
+          if(res.data.da.length<this.Query.size){
+            this.loadingPage=false
+          }
+          if(this.Query.page===0){
+            this.arrcom=[]
+          }
+          this.arrcom=[...this.arrcom,...res.data.da];
         }
       });
     },
+    //点击回复操作
     copy(id,name){
+      if(this.$store.getters.users.name){
+         this.postId=id
       this.content='@回复'+name+':'
       document.getElementsByTagName('textarea')[0].focus()
+      }else{
+          this.$toast('请先登录');
+      }
+     
+    },
+    //弹窗事件
+    beforeClose(e,done){
+      if(e==='cancel') return done()
+      var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+      if(this.name.length>=1&&this.password.length>=3&&reg.test(this.email)){
+              let data={
+                name:this.name,
+                email:this.email,
+                password:this.password
+              }
+              logReg(data).then(res=>{
+                console.log(res)
+                if(res.status===200&&res.data.success){
+                  localStorage.setItem('token',res.data.token)
+                  //解析token
+                  const jwttoken=jwt_decode(res.data.token)
+                  let data={
+                    jwttoken,
+                    done
+                  }
+                  this.$store.dispatch('saveToken',data)
+                }else{
+                    this.$toast(res.data.msg)
+                      done(false)
+                }
+              })
+      }else{
+        this.$toast('格式不正确')
+        done(false)
+      }
+    },
+    //发表评论
+    postXin(){
+      if(this.$store.getters.users.name){
+          if(this.content.length>=1){
+            this.Query.page=0
+            this.loadingPage=true
+          let data={
+            id:this.postId,
+            userid:this.$store.getters.users.id,
+            name:this.$store.getters.users.name,
+            text:this.content
+          }
+          postFa(data).then(res=>{
+            this.content=''
+           this.getAllCom()
+          })
+         }else{
+          this.$toast('评论不能为空');
+         }
+      }else{
+          this.$toast('请先登录');
+      }
+      
+        
+    },
+    //删除评论
+    delposts(id){
+      delpost({id}).then(res=>{
+        if(res.status===200&&res.data.success){
+          this.$toast(res.data.msg)
+          this.getAllCom()
+        }
+      })
+    },
+    //加载更多
+    pageLoading(){
+      this.Query.page++;
+      this.getAllCom()
+    },
+    //退出登录
+    layout(){
+       this.$store.dispatch('layout')
     }
   },
   filters: {
@@ -159,6 +264,17 @@ export default {
     margin: 20px;
     .bottomshow {
       width: 100%;
+      .jiazaibtn{
+        margin-left: 50%;
+        transform: translateX(-50%);
+        margin-top: 10PX;
+      }
+      .del{
+        font-weight:400;
+        margin-left: 30PX;
+        font-size: 20px;
+        color: red;
+      }
       .show {
         border-bottom: 1px solid #e8e8e8;
         padding-bottom: 50px;
@@ -183,9 +299,10 @@ export default {
       .icon {
         display: inline-block;
         text-align: center;
-        line-height: 50px;
+        line-height: 50PX;
         border-radius: 50%;
-        border: 2px solid red;
+        color: #e8e8e8;
+        border: 2PX solid #e8e8e8;
       }
     }
     .van-icon-music-o {

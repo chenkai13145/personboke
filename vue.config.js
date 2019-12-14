@@ -6,10 +6,7 @@ function resolve(dir){
 
 module.exports={
     devServer: {
-        host: "localhost", 
-        port: '8081',
-        https: false,
-        hotOnly: false, 
+     
         proxy: {
             '/boke': {    // search为转发路径
                 target: 'http://localhost:3008/api',  // 目标地址

@@ -2,15 +2,15 @@
   <section class="metitle">
     <h1>{{title}}</h1>
     <div class="content">
-      <ul v-if="datas[0].type==='xinxi'" class="garid">
+      <ul v-if="datas[0].type==='xinxi'" :class="[styleoff?'garid garidcolor':'garid']">
         <li v-for="(item,index) in datas" :key="index">
           <strong></strong>
           <label v-if="item.label">{{item.title}}:</label>
           <span v-html="item.text"></span>
         </li>
       </ul>
-      <ul class="garids" v-else-if="datas[0].type==='ji'">
-        <li class="btn">
+      <ul :class="[styleoff?'garids garidcolor':'garids']" v-else-if="datas[0].type==='ji'">
+        <li class="btn" v-if="btnoff">
           <van-icon @click="truns" :class="activeclass?'btn_icon':''" name="apps-o" />
         </li>
         <li v-show="activeclass" v-for="(item,index) in datas" :key="index">
@@ -33,12 +33,12 @@
         </li>
       </ul>
       <ul
-        class="garids"
+        :class="[styleoff?'garids garidcolor':'garids']"
         v-for="(item,index) in datas"
         :key="index+item.title"
         v-else-if="datas[0].type==='exp'"
       >
-        <li class="btn">
+        <li class="btn" v-if="btnoff">
           <van-icon @click="parents(index,item.url)" :class="item.off?'btn_icon':''" name="apps-o" />
         </li>
         <li class="lin">
@@ -51,7 +51,7 @@
           <div>{{item.content}}</div>
         </li>
       </ul>
-      <ul class="garids" v-else>
+      <ul :class="[styleoff?'garids garidcolor':'garids']" v-else>
         <li>
           <van-steps direction="vertical" :active="0">
             <van-step class="van-step--process" v-for="(item,index) in datas" :key="index">
@@ -80,6 +80,13 @@ export default {
     },
     tuData: {
       type: Array
+    },
+    btnoff:{
+      type:Boolean
+    },
+    styleoff:{
+      type:Boolean,
+      default:true
     }
   },
   data() {
@@ -126,9 +133,11 @@ export default {
     flex-wrap: wrap;
     justify-content: flex-start;
   }
+  .garidcolor{
+    background-color: rgb(233, 230, 230);
+  }
   .garid,
   .garids {
-    background-color: rgb(233, 230, 230);
     padding: 10px 0;
     margin-bottom: 10px;
     li:not(.btn) {
@@ -177,6 +186,15 @@ export default {
     }
     .van-steps--vertical{
          width: 100%;
+    }
+    /deep/ .van-step__title{
+      color: #000 !important;
+    }
+    /deep/ .van-step__icon{
+      display: none !important;
+    }
+   /deep/ .van-steps{
+        background:rgba(255, 255, 255, 0);
     }
   }
 }

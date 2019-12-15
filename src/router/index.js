@@ -7,8 +7,36 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'layout',
+    redirect:'/me',
+    component: () => import(/* webpackChunkName: "about" */ '../components/layout/layout'),
+    children:[
+      {
+        path:'/me',
+        name:'me',
+        component:()=> import('../views/me')
+      },
+      {
+        path:'/experience',
+        name:'experience',
+        component:()=> import('../views/experience')
+      },
+      {
+        path:'/project',
+        name:'project',
+        component:()=>import('../views/project')
+      },
+      {
+        path:'/professional',
+        name:'professional',
+        component:()=>import('../views/Professional')
+      },
+      {
+        path:'/common',
+        name:'common',
+        component:()=>import('../views/common/common')
+     },
+    ]
   },
   {
     path: '/about',
@@ -19,29 +47,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path:'/me',
-    name:'me',
-    component:()=> import('../views/me')
-  },
-  {
-    path:'/experience',
-    name:'experience',
-    component:()=> import('../views/experience')
-  },
-  {
-    path:'/project',
-    name:'project',
-    component:()=>import('../views/project')
-  },
-  {
-    path:'/professional',
-    name:'professional',
-    component:()=>import('../views/Professional')
-  },
-  {
-      path:'/common',
-      name:'common',
-      component:()=>import('../views/common/common')
+    path:'/downout',
+    name:'downout',
+    component:()=>import('../components/layout/downout'),
+    children:[
+      {
+        path:'/download',
+        name:'download',
+        component:()=>import('../views/download/index')
+      }
+    ]
   }
 ]
 

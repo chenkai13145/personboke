@@ -1,6 +1,6 @@
 <template>
    <div class="home">
-       <img src="../../assets/logo.png" alt="">
+       <img src="../../assets/logo.jpg" alt="">
        <div class="name">
           <span>Unremittingly</span> 
         </div>

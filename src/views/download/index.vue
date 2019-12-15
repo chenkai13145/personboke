@@ -1,22 +1,24 @@
 <template>
-  <div class="me">
+  <div class="mes">
     <!-- 联系方式 -->
-    <meTitle title="联系方式" :datas="one" />
-    <!-- 个人信息 -->
-    <meTitle title="个人信息" :datas="two" />
-    <!-- 联系方式 -->
-    <meTitle title="技能掌握" :datas="three" :tuData="pei" :btnoff="btnoff"/>
-    <!-- 项目经验 -->
-    <meTitle title="项目经验" :datas="four" :btnoff="btnoff"/>
-    <!-- 工作经历 -->
-    <meTitle title="工作经历" :datas="five" />
-    <van-icon name="down" class="down" @click="downFn"/>
+    <template v-if="over">
+      <meTitle title="联系方式" :datas="one" :styleoff="styleoff" />
+      <!-- 个人信息 -->
+      <meTitle title="个人信息" :datas="two" :styleoff="styleoff" />
+      <!-- 联系方式 -->
+      <meTitle title="技能掌握" :datas="three" :tuData="pei" :btnoff="btnoff" :styleoff="styleoff" />
+      <!-- 项目经验 -->
+      <meTitle title="项目经验" :datas="four" :btnoff="btnoff" :styleoff="styleoff" />
+      <!-- 工作经历 -->
+      <meTitle title="工作经历" :datas="five" :styleoff="styleoff" />
+    </template>
   </div>
 </template>
 <script>
 import meTitle from "../../components/me/metitle";
 import Pre from "../../components/garid/index";
-
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 export default {
   components: {
     meTitle,
@@ -24,6 +26,8 @@ export default {
   },
   data() {
     return {
+      over: true,
+      styleoff: false,
       one: [
         //联系方式
         {
@@ -149,7 +153,7 @@ export default {
               .toString(16)
               .substring(2, 8)
         },
-         {
+        {
           type: "node.js",
           value: 80,
           color:
@@ -300,8 +304,8 @@ export default {
       ],
       five: [
         {
-          type:'gongzuo',
-          gongsi:'数安值科技有限公司',
+          type: "gongzuo",
+          gongsi: "数安值科技有限公司",
           arr: [
             "1、负责公司项目的前端修改调试和开发工作。",
             "2、与项目经理、UI设计师以及后端工程师配合完成 Web开发工作。",
@@ -313,34 +317,92 @@ export default {
           ]
         }
       ],
-      btnoff:true
+      btnoff: false,
+      Canvass: null
     };
   },
-  methods:{
-    downFn(){
-      window.open(window.location.origin+'/download')
+  mounted() {
+    
+    html2canvas(document.body.getElementsByClassName("homes")[0]).then(
+      canvas => {
+        this.over = false;
+        this.$parent.over = false;
+        this.Canvass = canvas;
+        document.body.getElementsByClassName("mes")[0].appendChild(canvas);
+        let btn=document.createElement('div')
+        btn.innerText='下载pdf简历';
+        btn.style.width=120+'px';
+        btn.style.height=40+'px';
+        btn.style.lineHeight=40+'px';
+        btn.style.borderRadius=6+'px';
+        btn.style.border='1px solid red';
+        btn.style.position='fixed';
+        btn.style.right='60px';
+        btn.style.top='10px';
+        btn.style.cursor='pointer';
+        btn.style.textAlign="center";
+        btn.addEventListener('click',function(){
+            this.pdfDown()
+        }.bind(this))
+        document.body.getElementsByClassName("mes")[0].appendChild(btn);
+      }
+    );
+  },
+  methods: {
+    pdfDown() {
+      let canvas=this.Canvass
+      var contentWidth = canvas.width;
+      var contentHeight = canvas.height;
+      //一页pdf显示html页面生成的canvas高度;
+      var pageHeight = (contentWidth / 592.28) * 841.89;
+      //未生成pdf的html页面高度
+      var leftHeight = contentHeight;
+      //页面偏移
+      var position = 0;
+      //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+      var imgWidth = 595.28;
+      var imgHeight = (592.28 / contentWidth) * contentHeight;
+      var pageData = canvas.toDataURL("image/jpeg", 1.0);
+      var pdf = new jsPDF("", "pt", "a4");
+      //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+      //当内容未超过pdf一页显示的范围，无需分页
+      if (leftHeight < pageHeight) {
+        pdf.addImage(pageData, "JPEG", 0, 0, imgWidth, imgHeight);
+      } else {
+        while (leftHeight > 0) {
+          pdf.addImage(pageData, "JPEG", 0, position, imgWidth, imgHeight);
+          leftHeight -= pageHeight;
+          position -= 841.89;
+          //避免添加空白页
+          if (leftHeight > 0) {
+            pdf.addPage();
+          }
+        }
+      }
+      pdf.save("content.pdf");
     }
   }
 };
 </script>
 <style lang="scss">
-.me {
+.mes {
   box-shadow: 1px 1px 1px 2px rgb(236, 234, 234);
   padding: 2px 0px;
-  .down{
-    width: 50PX;
-    height: 50PX;
+  .down {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    box-shadow: 2PX 2PX 2PX 2PX rgb(192, 191, 191);
+    box-shadow: 2px 2px 2px 2px rgb(192, 191, 191);
     cursor: pointer;
     position: fixed;
     right: 60px;
     bottom: 100px;
   }
   .van-icon-down:before {
-    line-height: 50PX;
+    line-height: 50px;
     text-align: center;
-    width: 50PX;
+    width: 50px;
+    cursor: pointer;
   }
 }
 </style>

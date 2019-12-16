@@ -5,8 +5,11 @@ function resolve(dir){
 
 
 module.exports={
+     // 基本路径
+     publicPath: './',
+     // 输出文件目录
+    outputDir: 'dist',
     devServer: {
-     
         proxy: {
             '/boke': {    // search为转发路径
                 target: 'http://localhost:3008/api',  // 目标地址

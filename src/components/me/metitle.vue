@@ -115,7 +115,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .metitle {
   h1 {
     font-weight: 600 !important;

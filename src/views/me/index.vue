@@ -318,7 +318,7 @@ export default {
   },
   methods:{
     downFn(){
-      window.open(window.location.origin+'/download')
+      window.open(window.location.origin+'/#/download')
     }
   }
 };

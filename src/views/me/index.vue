@@ -256,7 +256,7 @@ export default {
             "4、与后端工程师配合，实现项目需求中页面交互功能开发。"
           ],
           content:
-            "利用react.js、redux、Echarts 、HTML5、CSS3、JS、antd、react-router-dom、less进行组件化和模块化开发",
+            "利用vue.js、vuex、Echarts 、HTML5、CSS3、JS、vue-router、ant design vue、axios进行组件化和模块化开发",
           url: [
             require("@/assets/liantong/child.png"),
             require("@/assets/liantong/home.png"),

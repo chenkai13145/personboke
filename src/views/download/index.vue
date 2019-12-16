@@ -379,7 +379,7 @@ export default {
           }
         }
       }
-      pdf.save("content.pdf");
+      pdf.save("ck.pdf");
     }
   }
 };

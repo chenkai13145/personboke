@@ -6,8 +6,8 @@
         </div>
        <div class="routes">
            <router-link tag="span" to="/me">简历</router-link>
-           <router-link tag="span" to="/me">点滴</router-link>
-           <router-link tag="span" to="/common">留言</router-link>
+           <!-- <router-link tag="span" to="/me">点滴</router-link>
+           <router-link tag="span" to="/common">留言</router-link> -->
        </div>
    </div>
 </template>

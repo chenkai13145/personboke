@@ -11,8 +11,6 @@
     <!-- 工作经历 -->
     <meTitle title="工作经历" :datas="five" />
     <van-icon name="down" class="down" @click="downFn"/>
-    <van-icon @click="play" :class="[music?'dsad musicadd':'musicadd']" name="music-o" size="40" />
-    <audio id="audio" ref="audio" hidden loop></audio>
   </div>
 </template>
 <script>
@@ -26,7 +24,6 @@ export default {
   },
   data() {
     return {
-      music: true,
       one: [
         //联系方式
         {
@@ -319,24 +316,10 @@ export default {
       btnoff:true
     };
   },
-  mounted(){
-     this.play()
-  },
   methods:{
     downFn(){
       window.open(window.location.origin+'/#/download')
-    },
-      //音乐播放
-    play() {
-      this.music = !this.music;
-      if (this.$refs.audio.src && this.$refs.audio.autoplay) {
-        this.$refs.audio.src = null;
-        this.$refs.audio.autoplay = null;
-      } else {
-        this.$refs.audio.src = require("../../../public/By2.mp3");
-        this.$refs.audio.autoplay = "autoplay";
-      }
-    },
+    }
   }
 };
 </script>
@@ -344,7 +327,6 @@ export default {
 .me {
   box-shadow: 1px 1px 1px 2px rgb(236, 234, 234);
   padding: 2px 0px;
-
   .down{
     width: 50PX;
     height: 50PX;
@@ -360,33 +342,5 @@ export default {
     text-align: center;
     width: 50PX;
   }
-  .van-icon-music-o {
-    position: fixed;
-    right: 60px;
-    bottom: 200px;
-    }
-    .musicadd {
-      -webkit-animation: haha1 10s linear infinite;
-    }
-    .dsad {
-      -webkit-animation-play-state: paused; //暂停播放
-    }
-    @-webkit-keyframes haha1 {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  25% {
-    -webkit-transform: rotate(90deg);
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-  }
-  75% {
-    -webkit-transform: rotate(270deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
 }
 </style>

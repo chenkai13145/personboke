@@ -13,8 +13,7 @@ export default {
 </script>
 <style lang="scss">
 .homes{
-  max-width: 800PX;
-  margin:auto;
+  
 }
 .actives{
   color: red;

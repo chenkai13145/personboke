@@ -12,7 +12,7 @@ export default {
     },
     data(){
         return{
-            over:true
+            over:false
         }
     }
 }

@@ -184,11 +184,17 @@ export default {
       display: flex;
       flex-direction: column;
     }
-    .van-steps--vertical{
+    /deep/ .van-steps--vertical{
          width: 100%;
-    }
+         padding: 0;
+             }
     /deep/ .van-step__title{
       color: #000 !important;
+      font-size: 18px;
+      p{
+         font-size: 18px;
+         
+      }
     }
     /deep/ .van-step__icon{
       display: none !important;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="layout">
         <Nav/>
         <router-view/>
     </div>
@@ -13,5 +13,8 @@ export default {
 }
 </script>
 <style lang="scss">
-
+.layout{
+    max-width: 800PX;
+    margin:auto;
+}
 </style>

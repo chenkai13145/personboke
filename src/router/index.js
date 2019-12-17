@@ -36,6 +36,11 @@ const routes = [
         name:'common',
         component:()=>import('../views/common/common')
      },
+     {
+      path:'/info',
+      name:'info',
+      component:()=>import('../views/experience/component/info')
+      }
     ]
   },
   {

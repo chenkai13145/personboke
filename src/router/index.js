@@ -62,6 +62,17 @@ const routes = [
         component:()=>import('../views/download/index')
       }
     ]
+  },
+  {
+    path:'/admin',
+    name:'admin',
+    children:[
+      {
+          path:'/experence',
+          name:'experence',
+          component:()=>import('../views/admin/admin')
+      }
+    ]
   }
 ]
 

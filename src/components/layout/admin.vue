@@ -1,6 +1,5 @@
 <template>
     <div class="admin">
-          admin
           <router-view/>
     </div>
 </template>

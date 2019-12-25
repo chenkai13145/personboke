@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -66,9 +65,10 @@ const routes = [
   {
     path:'/admin',
     name:'admin',
+    component:()=>import('../components/layout/admin'),
     children:[
       {
-          path:'/experence',
+          path:'/admin/experence',
           name:'experence',
           component:()=>import('../views/admin/admin')
       }

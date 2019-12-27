@@ -1,7 +1,9 @@
 <template>
     <div class="info">
+        <van-loading type="spinner" v-show="loadoff" color="#1989fa" />
         <h2 class="title wrap">{{data.title}}</h2>
         <p  class="desc wrap">{{data.desc}}</p>
+        <template v-show="loadoff" v-if="data.descobj!=undefined">
         <div v-for="(item,index) in data.descobj.arr" :key="index">
             <h4 class="wrap" style="color:#80633f" v-if="item.futitle">{{index+1}}、{{item.futitle}}</h4>
             <div  v-if="item.desccenter" class="descBot">
@@ -14,18 +16,32 @@
             </div>
             <pre class="textpre" v-if="item.daima">{{item.daima}}</pre>
         </div>
+        </template>
     </div>
 </template>
 <script>
+import {getinfoid} from '../../../api/exprence'
 export default {
      data(){
          return{
-             data:{}
+             data:{},
+             loadoff:true
          }
      },
-     created(){
-         this.data=JSON.parse(this.$route.query.data) 
-     }  
+     activated(){
+         this.getinfo()
+        
+     },
+     methods:{
+         getinfo(){
+             let id=this.$route.query.id
+             getinfoid({id}).then(res=>{
+                 if(res.data.success){
+                     this.data=res.data.data
+                 }
+             })
+         }
+     }
 }
 </script>
 <style lang="scss">

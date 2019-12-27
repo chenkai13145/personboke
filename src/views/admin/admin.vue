@@ -59,6 +59,7 @@
 </template>
 <script>
 import {updata} from '../../api/exprence'
+import {Toast} from 'vant'
 export default {
   data() {
     return {
@@ -88,7 +89,7 @@ export default {
                   format.append(key,this.formdata[key])
                }
                updata(format).then(res=>{
-                   console.log(res)
+                   Toast('添加成功')
                })
            }
       }

@@ -1,21 +1,22 @@
 <template>
   <div class="homes">
-   <router-view/>
+    <keep-alive>
+      <router-view />
+    </keep-alive>
   </div>
 </template>
 <script>
-import Nav from './components/tabar/tabar'
+import Nav from "./components/tabar/tabar";
 export default {
-  components:{
+  components: {
     Nav
   }
-}
+};
 </script>
 <style lang="scss">
-.homes{
-  
+.homes {
 }
-.actives{
+.actives {
   color: red;
 }
 </style>

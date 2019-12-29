@@ -80,11 +80,18 @@ export default {
       loadingPage:true
     };
   },
-  mounted() {
-    console.log(this.$store.getters.users.id)
+   deactivated(){
+   this.music=true
+   this.$refs.audio.src = null;
+   this.$refs.audio.autoplay = null;
+ },
+ activated(){
     this.$nextTick(()=>{
        this.play()
     })
+ },
+  mounted() {
+   
     // 获取窗口宽度
     if (window.innerWidth) {
       this.winWidth = window.innerWidth;

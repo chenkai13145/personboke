@@ -16,6 +16,8 @@
       </van-step>
     </van-steps>
     <van-button class="btn" v-if="dataoff" @click="loaddata" color="linear-gradient(to right, #4bb0ff, #6149f6)">加载更多</van-button>
+    <van-icon @click="play" :class="[music?'dsad musicadd':'musicadd']" name="music-o" size="40" />
+    <audio ref="audio" hidden loop></audio>
   </div>
 </template>
 <script>
@@ -23,6 +25,8 @@ import {getdi} from '../../api/exprence'
 export default {
   data() {
     return {
+      music: true,//音乐
+      winWidth: null,//获取设备宽度
       data: [
         // {
         //   title: "javascript基础点",
@@ -346,7 +350,21 @@ export default {
       dataoff:true
     };
   },
+ deactivated(){
+   this.music=true
+   this.$refs.audio.src = null;
+   this.$refs.audio.autoplay = null;
+ },
+ beforeDestroy(){
+
+ },
   mounted(){
+    // 获取窗口宽度
+    if (window.innerWidth) {
+      this.winWidth = window.innerWidth;
+    } else if (document.body && document.body.clientWidth) {
+      this.winWidth = document.body.clientWidth;
+    }
    this.getdiandi()
   },
   methods: {
@@ -355,6 +373,17 @@ export default {
         path: "/info",
         query: {id: data}
       });
+    },
+    //音乐播放
+    play() {
+      this.music = !this.music;
+      if (this.$refs.audio.src && this.$refs.audio.autoplay) {
+        this.$refs.audio.src = null;
+        this.$refs.audio.autoplay = null;
+      } else {
+        this.$refs.audio.src = require("../../../public/By1.mp3");
+        this.$refs.audio.autoplay = "autoplay";
+      }
     },
     //获取点滴
     getdiandi(){
@@ -387,14 +416,41 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-/deep/ .van-step__circle {
+.exprence {
+  color: #787978;
+  .musicadd {
+    -webkit-animation: haha1 10s linear infinite;
+
+  }
+  .dsad {
+    -webkit-animation-play-state: paused; //暂停播放
+    
+  }
+  @-webkit-keyframes haha1 {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    25% {
+      -webkit-transform: rotate(90deg);
+    }
+    50% {
+      -webkit-transform: rotate(180deg);
+    }
+    75% {
+      -webkit-transform: rotate(270deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  /deep/ .van-step__circle {
   width: 20px;
   height: 20px;
 }
 /deep/ .van-steps {
   background: rgba(0, 0, 0, 0);
 }
-.exprence {
+   position: relative;
   .time {
     display: flex;
     position: absolute;
@@ -413,6 +469,11 @@ export default {
       background-color: rgb(214, 216, 218);
       font-size: 16px;
     }
+  }
+  .van-icon-music-o{
+     position: fixed;
+      right: 30px;
+      bottom: 126px;
   }
   .time:hover{
     cursor: pointer;
@@ -440,6 +501,7 @@ export default {
   .van-steps--vertical {
     padding: 20px 40px;
   }
+
 }
 
 .btn{

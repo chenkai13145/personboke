@@ -1,0 +1,25 @@
+.musicadd {
+    -webkit-animation: haha1 10s linear infinite;
+
+  }
+  .dsad {
+    -webkit-animation-play-state: paused; //暂停播放
+    
+  }
+  @-webkit-keyframes haha1 {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    25% {
+      -webkit-transform: rotate(90deg);
+    }
+    50% {
+      -webkit-transform: rotate(180deg);
+    }
+    75% {
+      -webkit-transform: rotate(270deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }

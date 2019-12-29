@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import {Toast,Tag,Card,Loading,CellGroup,Uploader, Field,Dialog,Step,Steps,ImagePreview,Button,Tabbar,TabbarItem,Icon,Circle,Progress,Lazyload} from 'vant';
+import {Col,Row,Toast,Tag,Card,Loading,CellGroup,Uploader, Field,Dialog,Step,Steps,ImagePreview,Button,Tabbar,TabbarItem,Icon,Circle,Progress,Lazyload} from 'vant';
 
 
 Vue.use(Button);
@@ -16,4 +16,5 @@ Vue.use(Field);
 Vue.use(Uploader);
 Vue.use(Tag);
 Vue.use(Card);
+Vue.use(Row).use(Col);
 Vue.use(Loading);

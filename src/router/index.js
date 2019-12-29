@@ -71,7 +71,17 @@ const routes = [
           path:'/admin/experence',
           name:'experence',
           component:()=>import('../views/admin/admin')
-      }
+      },
+      {
+        path:'/admin/bianji',
+        name:'bianji',
+        component:()=>import('../views/admin/admin')
+      },
+      {
+        path:'/admin/del',
+        name:'del',
+        component:()=>import('../views/admin/admin')
+    }
     ]
   }
 ]

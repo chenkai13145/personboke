@@ -1,9 +1,10 @@
 <template>
     <div class="info">
-        <van-loading type="spinner" v-show="loadoff" color="#1989fa" />
-        <h2 class="title wrap">{{data.title}}</h2>
-        <p  class="desc wrap">{{data.desc}}</p>
-        <template v-show="loadoff" v-if="data.descobj!=undefined">
+        <van-loading type="spinner" v-show="!loadoff" color="#1989fa" />
+        
+        <h2 v-show="loadoff" class="title wrap">{{data.title}}</h2>
+        <p v-show="loadoff"  class="desc wrap">{{data.desc}}</p>
+        <template v-if="data.descobj!=undefined&&loadoff">
         <div v-for="(item,index) in data.descobj.arr" :key="index">
             <h4 class="wrap" style="color:#80633f" v-if="item.futitle">{{index+1}}、{{item.futitle}}</h4>
             <div  v-if="item.desccenter" class="descBot">
@@ -25,7 +26,7 @@ export default {
      data(){
          return{
              data:{},
-             loadoff:true
+             loadoff:false
          }
      },
      activated(){
@@ -34,10 +35,12 @@ export default {
      },
      methods:{
          getinfo(){
+             this.loadoff=false
              let id=this.$route.query.id
              getinfoid({id}).then(res=>{
                  if(res.data.success){
                      this.data=res.data.data
+                     this.loadoff=true
                  }
              })
          }
@@ -46,6 +49,9 @@ export default {
 </script>
 <style lang="scss">
 .info{
+    .van-loading{
+        text-align: center;
+    }
     margin: 0 20PX;
 .title{
     text-align: center;

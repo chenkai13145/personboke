@@ -24,3 +24,11 @@ export function getinfoid(data){
         data
     })
 }
+//编辑主要点滴
+export function editmain(data){
+    return request({
+         url:'/editmain',
+         method:'post',
+         data
+    })
+}

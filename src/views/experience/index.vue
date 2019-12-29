@@ -2,7 +2,7 @@
   <div class="exprence">
     <van-steps direction="vertical" :active="-1">
       <van-step v-for="(item,index) in data" :key="index">
-        <span class="time">
+        <span class="time" @click="pathTo(item._id)">
           <div class="art-icon"></div>
           <div class="art-time">{{item.time |filters}}</div>
         </span>
@@ -399,6 +399,7 @@ export default {
     display: flex;
     position: absolute;
     top: -10px;
+
     .art-icon {
       border-right: 16px solid rgb(214, 216, 218);
       border-bottom: 24px solid transparent;
@@ -412,6 +413,11 @@ export default {
       background-color: rgb(214, 216, 218);
       font-size: 16px;
     }
+  }
+  .time:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all 2s linear;
   }
   .content {
     padding: 30px;
@@ -435,6 +441,7 @@ export default {
     padding: 20px 40px;
   }
 }
+
 .btn{
 position: absolute;
 left: 50%;

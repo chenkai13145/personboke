@@ -487,9 +487,11 @@ export default {
       cursor: pointer;
     }
     .art {
+      padding-right: 20px;
       .art_img {
         max-width: 600px;
         max-height: 300px;
+        width: 100%;
         display: block;
       }
     }
@@ -509,5 +511,6 @@ position: absolute;
 left: 50%;
 transform: translateX(-50%);
 cursor: pointer;
+margin-bottom: 10px;
 }
 </style>

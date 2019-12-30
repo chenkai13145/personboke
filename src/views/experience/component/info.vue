@@ -8,7 +8,7 @@
         <div v-for="(item,index) in data.descobj.arr" :key="index">
             <h4 class="wrap" style="color:#80633f" v-if="item.futitle">{{index+1}}、{{item.futitle}}</h4>
             <div  v-if="item.desccenter" class="descBot">
-                <div class="wrap" v-if="item.desccenter.title">{{item.desccenter.title}}</div>
+                <div class="wrap" v-if="item.desccenter.destitle">{{item.desccenter.destitle}}</div>
                 <ul class="uls">
                     <li class="wrap" v-for="(it,i) in item.desccenter.desctitle" :key="i+'p'">
                         {{it}}

@@ -17,7 +17,7 @@
     </van-steps>
     <van-button class="btn" v-if="dataoff" @click="loaddata" color="linear-gradient(to right, #4bb0ff, #6149f6)">加载更多</van-button>
     <van-icon @click="play" :class="[music?'dsad musicadd':'musicadd']" name="music-o" size="40" />
-    <audio ref="audio" hidden loop></audio>
+    <audio ref="audio" muted='muted' :src="mpviode" hidden loop></audio>
   </div>
 </template>
 <script>
@@ -353,8 +353,7 @@ export default {
   },
  deactivated(){
    this.music=true
-   this.$refs.audio.src = null;
-   this.$refs.audio.autoplay = null;
+   this.$refs.audio.pause();
  },
  beforeDestroy(){
 
@@ -377,15 +376,12 @@ export default {
     },
     //音乐播放
     play() {
-      this.music = !this.music;
-      if (this.$refs.audio.src && this.$refs.audio.autoplay) {
-        this.$refs.audio.src = null;
-        this.$refs.audio.autoplay = null;
+      if (this.music) {
+         this.$refs.audio.play();
       } else {
-        this.$refs.audio.load();
-        this.$refs.audio.src = this.mpviode;
-        this.$refs.audio.autoplay = "autoplay";
+         this.$refs.audio.pause();
       }
+      this.music = !this.music;
     },
     //获取点滴
     getdiandi(){

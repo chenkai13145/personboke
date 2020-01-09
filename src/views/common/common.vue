@@ -37,7 +37,7 @@
         <van-button plain type="primary" v-show='loadingPage' @click="pageLoading" class="jiazaibtn">加载更多</van-button>
       </div>
       <van-icon @click="play" :class="[music?'dsad musicadd':'musicadd']" name="music-o" size="40" />
-      <audio ref="audio" hidden loop></audio>
+      <audio ref="audio" muted='muted' :src="mpvide" hidden loop></audio>
     </div>
     <!-- 弹窗 -->
     <van-dialog v-model="show" :beforeClose="beforeClose" title="登录" :width="winWidth>600?600:320" show-cancel-button>
@@ -83,8 +83,7 @@ export default {
   },
    deactivated(){
    this.music=true
-   this.$refs.audio.src = null;
-   this.$refs.audio.autoplay = null;
+   this.$refs.audio.pause();
  },
  activated(){
     this.$nextTick(()=>{
@@ -92,7 +91,6 @@ export default {
     })
  },
   mounted() {
-   
     // 获取窗口宽度
     if (window.innerWidth) {
       this.winWidth = window.innerWidth;
@@ -108,15 +106,12 @@ export default {
     },
     //音乐播放
     play() {
-      this.music = !this.music;
-      if (this.$refs.audio.src && this.$refs.audio.autoplay) {
-        this.$refs.audio.src = null;
-        this.$refs.audio.autoplay = null;
+      if (this.music) {
+        this.$refs.audio.play();
       } else {
-        this.$refs.audio.load();
-        this.$refs.audio.src = this.mpvide;
-        this.$refs.audio.autoplay = "autoplay";
+         this.$refs.audio.pause();
       }
+      this.music = !this.music;
     },
     //获取评论
     getAllCom() {

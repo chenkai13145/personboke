@@ -77,7 +77,8 @@ export default {
         size:10,
         page:0
       },
-      loadingPage:true
+      loadingPage:true,
+      mpvide:require("./By2.mp3")
     };
   },
    deactivated(){
@@ -112,7 +113,8 @@ export default {
         this.$refs.audio.src = null;
         this.$refs.audio.autoplay = null;
       } else {
-        this.$refs.audio.src = require("../../../public/By2.mp3");
+        this.$refs.audio.load();
+        this.$refs.audio.src = this.mpvide;
         this.$refs.audio.autoplay = "autoplay";
       }
     },

@@ -347,7 +347,8 @@ export default {
         page:0,
         size:6
       },
-      dataoff:true
+      dataoff:true,
+      mpviode:require("./By1.mp3")
     };
   },
  deactivated(){
@@ -381,7 +382,8 @@ export default {
         this.$refs.audio.src = null;
         this.$refs.audio.autoplay = null;
       } else {
-        this.$refs.audio.src = require("../../../public/By1.mp3");
+        this.$refs.audio.load();
+        this.$refs.audio.src = this.mpviode;
         this.$refs.audio.autoplay = "autoplay";
       }
     },

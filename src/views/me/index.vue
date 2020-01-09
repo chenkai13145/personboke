@@ -8,6 +8,8 @@
     <meTitle title="技能掌握" :datas="three" :tuData="pei" :btnoff="btnoff"/>
     <!-- 项目经验 -->
     <meTitle title="项目经验" :datas="four" :btnoff="btnoff"/>
+     <!-- 作品链接 -->
+    <meTitle title="作品链接" :datas="six"/>
     <!-- 工作经历 -->
     <meTitle title="工作经历" :datas="five" />
     <van-icon name="down" class="down" @click="downFn"/>
@@ -137,6 +139,17 @@ export default {
         {
           text: "了解微信小程序开发，有微信小程序开发经验。"
         }
+      ],
+      six:[
+         {
+          type: "ji",
+          text:"http://abc.kaisadiguo.top/moves/",
+          a:true
+          },
+          {
+            a:true,
+            text:"http://abc.kaisadiguo.top/shoppings/#/"
+          }
       ],
       pei: [
         //技能掌握

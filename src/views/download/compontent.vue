@@ -9,6 +9,8 @@
       <meTitle title="技能掌握" :datas="three" :tuData="pei" :btnoff="btnoff" :styleoff="styleoff" />
       <!-- 项目经验 -->
       <meTitle title="项目经验" :datas="four" :btnoff="btnoff" :styleoff="styleoff" />
+           <!-- 作品链接 -->
+      <meTitle title="作品链接" :datas="six"/>
       <!-- 工作经历 -->
       <meTitle title="工作经历" :datas="five" :styleoff="styleoff" />
     </template>
@@ -44,7 +46,7 @@ export default {
         {
           label: true,
           title: "网站",
-          text: "kaisadiguo.top"
+          text: "abc.kaisadiguo.top"
         }
       ],
       two: [
@@ -316,6 +318,17 @@ export default {
             "7、完成上级指派的其他工作。"
           ]
         }
+      ],
+       six:[
+         {
+          type: "ji",
+          text:"http://abc.kaisadiguo.top/moves/",
+          a:true
+          },
+          {
+            a:true,
+            text:"http://abc.kaisadiguo.top/shoppings/#/"
+          }
       ],
       btnoff: false,
       Canvass: null

@@ -42,7 +42,7 @@ export default {
         {
           label: true,
           title: "网站",
-          text: "kaisadiguo.top"
+          text: "abc.kaisadiguo.top"
         }
       ],
       two: [

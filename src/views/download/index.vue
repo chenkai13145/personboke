@@ -19,7 +19,7 @@ export default {
       // over: true,
       // styleoff: false,
       // one: [
-      //   //联系方式
+        //联系方式
       //   {
       //     label: true,
       //     title: "手机",

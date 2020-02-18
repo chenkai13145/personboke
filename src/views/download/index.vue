@@ -238,7 +238,7 @@ export default {
       //       require("@/assets/home.png"),
       //       require("@/assets/sker.png")
       //     ]
-      //   },
+        // },
       //   {
       //     off: true,
       //     title: "项目二:联通计费管理平台",

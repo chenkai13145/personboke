@@ -72,7 +72,7 @@ export default {
         {
           label: true,
           title: "期望城市",
-          text: "成都"
+          text: "中山"
         },
         {
           label: true,
@@ -328,6 +328,10 @@ export default {
           {
             a:true,
             text:"http://abc.kaisadiguo.top/shoppings/#/"
+          },
+          {
+            a:true,
+            text:"http://abc.kaisadiguo.top/daping/index"
           }
       ],
       btnoff: false,

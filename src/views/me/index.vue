@@ -58,7 +58,7 @@ export default {
         },
         {
           label: false,
-          text: "前端开发|1年工作经验"
+          text: "前端开发|1年半工作经验"
         },
         {
           label: true,
@@ -144,14 +144,17 @@ export default {
          {
           type: "ji",
           text:"http://abc.kaisadiguo.top/moves/",
+            desc:'(移动端)',
           a:true
           },
           {
             a:true,
-            text:"http://abc.kaisadiguo.top/shoppings/#/"
+            text:"http://abc.kaisadiguo.top/shoppings/#/",
+            desc:'(移动端)'
           },
           {
             a:true,
+            desc:'(pc端大屏)',
             text:"http://abc.kaisadiguo.top/daping/index"
           }
       ],

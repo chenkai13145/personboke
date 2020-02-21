@@ -14,7 +14,7 @@
           <van-icon @click="truns" :class="activeclass?'btn_icon':''" name="apps-o" />
         </li>
         <li v-show="activeclass" v-for="(item,index) in datas" :key="index">
-          <span>{{index+1}}、<a v-if="item.a" target="_blank" :href="item.text">{{item.text}}</a><template v-else>{{item.text}}</template></span>
+          <span>{{index+1}}、<a v-if="item.a" target="_blank" :href="item.text">{{item.text}}{{item.desc}}</a><template v-else>{{item.text}}</template></span>
         </li>
         <!-- 图形化 -->
         <li class="tul" v-show="!activeclass" v-for="(item) in tuData" :key="item.type">

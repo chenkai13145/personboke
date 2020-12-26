@@ -38,6 +38,8 @@ module.exports={
             msTileImage: 'favicon.ico'
         }
     },
+     // 生产环境是否生成 sourceMap 文件
+     productionSourceMap: false,
     configureWebpack: {
         //警告 webpack 的性能提示
 	    performance: {

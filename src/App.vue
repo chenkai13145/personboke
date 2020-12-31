@@ -1,6 +1,7 @@
 <template>
   <van-loading v-if="show" class="loadingapp"  type="spinner" color="#1989fa"/>
-  <div v-else class="homes" @click="clickFn" @touchend="touchendFn" @touchmove="mousemove($event,'mble')" @mousemove="mousemove($event,'pc')">
+  <!-- <div v-else class="homes" @click="clickFn" @touchend="touchendFn" @touchmove="mousemove($event,'mble')" @mousemove="mousemove($event,'pc')"> -->
+  <div v-else class="homes" @click="clickFn" @touchend="touchendFn" >
     <keep-alive>
          <router-view />
     </keep-alive>
@@ -34,22 +35,22 @@ export default {
   },
   methods:{
     //鼠标移动
-    mousemove(e,val){
-        let x=0
-        let y=0
-       if(val=='pc'){
-           x=e.x+'px'
-           y=e.y+'px'
-        }else{
-           x=e.changedTouches[0].clientX+'px'
-           y=e.changedTouches[0].clientY+'px'
-        }
-        setInterval(()=>{
-           this.imgArr.push({x,y})
-        })
+    // mousemove(e,val){
+    //     let x=0
+    //     let y=0
+    //    if(val=='pc'){
+    //        x=e.x+'px'
+    //        y=e.y+'px'
+    //     }else{
+    //        x=e.changedTouches[0].clientX+'px'
+    //        y=e.changedTouches[0].clientY+'px'
+    //     }
+    //     setInterval(()=>{
+    //        this.imgArr.push({x,y})
+    //     })
 
      
-    },
+    // },
     //点击双击
     clickFn(e){
       this.imgArr=[]
